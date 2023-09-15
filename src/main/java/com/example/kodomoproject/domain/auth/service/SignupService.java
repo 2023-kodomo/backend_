@@ -16,7 +16,7 @@ public class SignupService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private void execute(SignupRequest request) {
+    public void execute(SignupRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> UserAlreadyExistException.EXCEPTION);
 
