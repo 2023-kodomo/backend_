@@ -2,3 +2,6 @@ spring:
   data:
     mongodb:
       uri: ${spring.data.mongodb.uri}
+
+jwt:
+  secret: ${jwt.secret}
