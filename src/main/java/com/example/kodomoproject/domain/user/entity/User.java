@@ -10,7 +10,6 @@ import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
