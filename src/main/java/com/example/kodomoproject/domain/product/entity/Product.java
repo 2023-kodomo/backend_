@@ -33,6 +33,14 @@ public class Product {
     private String image;
 
     @CreatedDate
-    private Date createdDate;
+    private Date uploadDate;
 
+    public void update(String title, String content,
+                       Integer price, String image, Date updateDate) {
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.image = image;
+        this.uploadDate = updateDate;
+    }
 }
