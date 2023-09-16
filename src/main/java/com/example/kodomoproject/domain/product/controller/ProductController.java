@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductCreateService productCreateService;
@@ -45,5 +45,6 @@ public class ProductController {
     public void deleteProductById(@PathVariable String id) {
         productDeleteService.execute(id);
     }
+
 
 }
