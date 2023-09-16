@@ -1,5 +1,6 @@
 package com.example.kodomoproject.domain.product.exception;
 
+
 import com.example.kodomoproject.global.exception.CustomException;
 import com.example.kodomoproject.global.exception.error.ErrorCode;
 
@@ -9,4 +10,5 @@ public class ProductNotFoundException extends CustomException {
     private ProductNotFoundException() {
         super(ErrorCode.PRODUCT_NOT_FOUND);
     }
+
 }

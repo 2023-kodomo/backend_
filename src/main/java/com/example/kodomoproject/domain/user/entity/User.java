@@ -1,35 +1,38 @@
 package com.example.kodomoproject.domain.user.entity;
 
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import java.util.Date;
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Document
-public class User {
-    @Id
-    private String id;
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @Document
+    public class User {
 
-    @NotBlank
-    private String name;
+        @Id
+        private String id;
 
-    @NotBlank
-    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
-    private String email;
+        @NotBlank
+        private String email;
 
-    @NotBlank
-    private String password;
+        @NotBlank
+        private String name;
 
-    @NotBlank
-    @CreatedDate
-    private Date createdDate;
+        @NotBlank
+        @JsonIgnore
+        private String password;
 
+    @Builder
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.kodomoproject.global.security.jwt;
 
-import com.example.kodomoproject.global.security.jwt.exception.GenerationFailedException;
+import com.example.kodomoproject.global.security.jwt.exception.InvalidDataException;
+import com.example.kodomoproject.global.security.jwt.exception.JwtCreationFailedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -17,16 +18,21 @@ import java.util.Date;
 
 @Component
 public class JwtProvider {
-    @Value("${jwt.secret}")
+
+    @Value("secret")
     private String secretKey;
 
-    public String accessToken(String email) {
-        return createToken(email, "access", 7200L);
+    public String createAccessToken(String email) {
+        return createToken(email, "access", 7200000L);
+    }
+
+    public String createRefreshToken(String email) {
+        return createToken(email, "refresh", 720000L);
     }
 
     private String createToken(String email, String type, Long exp) {
-        if (email == null) {
-            throw GenerationFailedException.EXCEPTION;
+        if (email == null || type == null || exp == null) {
+            throw InvalidDataException.EXCEPTION;
         }
 
         long nowMillis = System.currentTimeMillis();
@@ -36,25 +42,36 @@ public class JwtProvider {
         try {
             return Jwts.builder()
                     .claim("type", type)
-                    .setSubject(email)
                     .setIssuedAt(now)
+                    .setSubject(email)
                     .setExpiration(expiration)
                     .signWith(SignatureAlgorithm.HS256, secretKey)
                     .compact();
         } catch (JwtException e) {
-            throw GenerationFailedException.EXCEPTION;
+            throw JwtCreationFailedException.EXCEPTION;
         }
     }
 
-    public Claims parseClaims(String token) throws JwtException {
-        return Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJwt(token).getBody();
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return true;
+        } catch (JwtException e) {
+            return false;
+        }
+    }
+
+    private Claims parseClaims(String token) throws JwtException {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     public Authentication getAuthentication(String token) {
         try {
-            Claims claims = parseClaims(token);
-            UserDetails details = createAuthenticatedUserFromClaims(claims);
+            Claims claim = parseClaims(token);
+            UserDetails details = createAuthenticatedUserFromClaims(claim);
             return new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
         } catch (JwtException e) {
             return null;
@@ -68,15 +85,6 @@ public class JwtProvider {
 
     private String getEmail(Claims claims) {
         return claims.getSubject();
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return true;
-        } catch (JwtException e) {
-            return false;
-        }
     }
 
 }

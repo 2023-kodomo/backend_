@@ -1,5 +1,6 @@
 package com.example.kodomoproject.domain.user.service.facade;
 
+import com.example.kodomoproject.domain.product.exception.ProductNotFoundException;
 import com.example.kodomoproject.domain.user.entity.User;
 import com.example.kodomoproject.domain.user.exception.UserNotFoundException;
 import com.example.kodomoproject.domain.user.repository.UserRepository;
@@ -19,6 +20,16 @@ public class UserFacade {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userRepository.findByEmail(email)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findById(email)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+    }
+
+    public User getUserById(String id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 

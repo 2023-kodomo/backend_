@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@RequestMapping("/auth")
 public class AuthController {
     private final SignupService signupService;
     private final LoginService loginService;
@@ -27,4 +27,5 @@ public class AuthController {
     public LoginResponse login(@RequestBody LoginRequest request) {
         return loginService.execute(request);
     }
+
 }

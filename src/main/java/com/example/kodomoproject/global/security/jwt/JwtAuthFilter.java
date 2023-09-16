@@ -16,6 +16,7 @@ import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
+
     private final JwtProvider jwtProvider;
 
     private static final String HEADER = "Authorization";
@@ -24,15 +25,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain chain) throws ServletException, IOException {
         String token = extractToken(request);
-        if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
+        if(StringUtils.hasText(token) && jwtProvider.validateToken(token)){
             Authentication authentication = jwtProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
-            log.error("토큰 유효 X");
         }
-        filterChain.doFilter(request, response);
+        else
+            log.error("토큰이 유효하지 않아요");
+        chain.doFilter(request, response);
     }
 
     private String extractToken(HttpServletRequest request) {

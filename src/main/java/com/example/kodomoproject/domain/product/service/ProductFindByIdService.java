@@ -1,5 +1,6 @@
 package com.example.kodomoproject.domain.product.service;
 
+import com.example.kodomoproject.domain.comment.controller.dto.response.CommentResponse;
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
 import com.example.kodomoproject.domain.product.service.facade.ProductFacade;
@@ -15,13 +16,17 @@ public class ProductFindByIdService {
         Product product = productFacade.getProductById(id);
 
         return ProductResponse.builder()
+                .seller(product.getSeller())
                 .title(product.getTitle())
                 .content(product.getContent())
-                .user(product.getSeller())
                 .price(product.getPrice())
-                .image(product.getImage())
+                .image(product.getImageURL())
                 .uploadDate(product.getUploadDate())
+                .comment(product.getComments().stream().map(r -> new CommentResponse(
+                        r.getWriter(),
+                        r.getContent(),
+                        r.getCreatedDate()
+                )).toList())
                 .build();
     }
-
 }

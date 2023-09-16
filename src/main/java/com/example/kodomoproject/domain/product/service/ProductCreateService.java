@@ -3,7 +3,6 @@ package com.example.kodomoproject.domain.product.service;
 import com.example.kodomoproject.domain.product.controller.dto.request.ProductRequest;
 import com.example.kodomoproject.domain.product.entity.Product;
 import com.example.kodomoproject.domain.product.repository.ProductRepository;
-import com.example.kodomoproject.domain.product.service.facade.ProductFacade;
 import com.example.kodomoproject.domain.user.entity.User;
 import com.example.kodomoproject.domain.user.service.facade.UserFacade;
 import com.example.kodomoproject.global.facade.DateFacade;
@@ -29,8 +28,7 @@ public class ProductCreateService {
                 .content(request.getContent())
                 .price(request.getPrice())
                 .image(request.getImage())
-                .uploadDate(now)
+                .updatedDate(now)
                 .build());
     }
-
 }

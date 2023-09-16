@@ -4,6 +4,8 @@ import com.example.kodomoproject.domain.comment.controller.dto.response.CommentR
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
 import com.example.kodomoproject.domain.product.repository.ProductRepository;
+import com.example.kodomoproject.domain.user.entity.User;
+import com.example.kodomoproject.domain.user.service.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,23 +13,25 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductFindAllService {
+public class ProductFindByUserService {
     private final ProductRepository productRepository;
+    private final UserFacade userFacade;
 
-    public List<ProductResponse> execute() {
-        List<Product> productList = productRepository.findAll();
+    public List<ProductResponse> execute(String id) {
+        User user = userFacade.getUserById(id);
+        List<Product> products = productRepository.findBySellerId(user.getId());
 
-        return productList.stream().map(p -> new ProductResponse(
+        return products.stream().map(p -> new ProductResponse(
                 p.getSeller(),
                 p.getTitle(),
                 p.getContent(),
                 p.getPrice(),
                 p.getImageURL(),
                 p.getUploadDate(),
-                p.getComments().stream().map(r -> new CommentResponse(
-                        r.getWriter(),
-                        r.getContent(),
-                        r.getCreatedDate()
+                p.getComments().stream().map(c -> new CommentResponse(
+                        c.getWriter(),
+                        c.getContent(),
+                        c.getCreatedDate()
                 )).toList()
         )).toList();
     }

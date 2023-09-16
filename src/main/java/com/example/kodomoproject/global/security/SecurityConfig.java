@@ -20,6 +20,7 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JwtProvider jwtProvider;
 
     @Bean
@@ -27,18 +28,21 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .authorizeRequests()
+                .antMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .csrf().disable()
                 .cors().and()
                 .formLogin().disable()
                 .headers().frameOptions().disable()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .anyRequest().authenticated()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(new JwtAuthFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
