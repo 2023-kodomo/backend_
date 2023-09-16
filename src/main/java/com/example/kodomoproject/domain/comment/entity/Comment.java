@@ -42,9 +42,4 @@ public class Comment {
         this.createdDate = createdDate;
     }
 
-    public void update(String content, Date updatedDate) {
-        this.content = content;
-        this.createdDate = updatedDate;
-    }
-
 }
