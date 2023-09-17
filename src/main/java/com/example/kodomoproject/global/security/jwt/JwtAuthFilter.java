@@ -31,8 +31,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             Authentication authentication = jwtProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        else
-            log.error("토큰이 유효하지 않아요");
         chain.doFilter(request, response);
     }
 

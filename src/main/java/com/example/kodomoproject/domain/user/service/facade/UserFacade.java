@@ -23,11 +23,6 @@ public class UserFacade {
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
-    public User getUserByEmail(String email) {
-        return userRepository.findById(email)
-                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
-    }
-
     public User getUserById(String id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
