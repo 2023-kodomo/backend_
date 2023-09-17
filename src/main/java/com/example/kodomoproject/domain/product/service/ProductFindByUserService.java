@@ -1,7 +1,5 @@
 package com.example.kodomoproject.domain.product.service;
 
-import com.example.kodomoproject.domain.comment.controller.dto.response.CommentResponse;
-import com.example.kodomoproject.domain.product.controller.dto.response.ProductResponse;
 import com.example.kodomoproject.domain.product.controller.dto.response.UserProductResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
 import com.example.kodomoproject.domain.product.repository.ProductRepository;
