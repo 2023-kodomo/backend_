@@ -16,7 +16,7 @@ public class UserController {
 
     @GetMapping
     public UserResponse getMyInfo() {
-        return getUserService.myself();
+        return getUserService.myInfo();
     }
 
     @GetMapping("{id}")

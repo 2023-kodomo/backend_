@@ -15,10 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetUserService {
     private final ProductFindByUserService productFindByUserService;
-    private final UserRepository userRepository;
     private final UserFacade userFacade;
 
-    public UserResponse myself() {
+    public UserResponse myInfo() {
         User user = userFacade.getUser();
         List<UserProductResponse> products = productFindByUserService.execute(user.getId());
 
