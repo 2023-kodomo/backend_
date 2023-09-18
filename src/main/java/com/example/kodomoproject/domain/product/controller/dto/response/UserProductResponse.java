@@ -1,5 +1,6 @@
 package com.example.kodomoproject.domain.product.controller.dto.response;
 
+import com.example.kodomoproject.domain.product.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +18,12 @@ public class UserProductResponse {
     private Integer price;
     private String image;
     private Date uploadDate;
+
+    public UserProductResponse(Product product) {
+        this.title = product.getTitle();
+        this.content = product.getContent();
+        this.price = product.getPrice();
+        this.image = product.getImageURL();
+        this.uploadDate = product.getUploadDate();
+    }
 }

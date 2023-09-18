@@ -20,12 +20,8 @@ public class ProductFindByUserService {
         User user = userFacade.getUserById(id);
         List<Product> products = productRepository.findBySellerId(user.getId());
 
-        return products.stream().map(p -> new UserProductResponse(
-                p.getTitle(),
-                p.getContent(),
-                p.getPrice(),
-                p.getImageURL(),
-                p.getUploadDate()
-        )).toList();
+        return products.stream()
+                .map(UserProductResponse::new)
+                .toList();
     }
 }
