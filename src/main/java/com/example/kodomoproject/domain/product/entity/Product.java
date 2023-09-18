@@ -30,8 +30,10 @@ public class Product {
     @NotBlank
     private String content;
 
+    @NotBlank
     private Integer price;
 
+    @NotBlank
     private Date uploadDate;
 
     private String imageURL = "";

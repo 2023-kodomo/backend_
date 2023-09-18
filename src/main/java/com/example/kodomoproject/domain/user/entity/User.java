@@ -12,27 +12,27 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
-    @Setter
-    @NoArgsConstructor
-    @Document
-    public class User {
+@Setter
+@NoArgsConstructor
+@Document
+public class User {
 
-        @Id
-        private String id;
+    @Id
+    private String id;
 
-        @NotBlank
-        @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$",
-                message = "이메일 형식이 올바르지 않습니다.")
-        private String email;
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$",
+            message = "이메일 형식이 올바르지 않습니다.")
+    private String email;
 
-        @NotBlank
-        private String name;
+    @NotBlank
+    private String name;
 
-        @NotBlank
-        @JsonIgnore
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]*$",
-                message = "비밀번호 형식이 올바르지 않습니다.")
-        private String password;
+    @NotBlank
+    @JsonIgnore
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]*$",
+            message = "비밀번호 형식이 올바르지 않습니다.")
+    private String password;
 
     @Builder
     public User(String name, String email, String password) {

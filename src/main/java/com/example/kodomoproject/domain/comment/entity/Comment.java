@@ -32,6 +32,7 @@ public class Comment {
     @DBRef
     private Product product;
 
+    @NotBlank
     private Date createdDate;
 
     @Builder
