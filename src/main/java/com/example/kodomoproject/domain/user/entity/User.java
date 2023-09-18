@@ -9,8 +9,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
-    @Getter
+@Getter
     @Setter
     @NoArgsConstructor
     @Document
@@ -20,6 +21,8 @@ import javax.validation.constraints.NotBlank;
         private String id;
 
         @NotBlank
+        @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$",
+                message = "이메일 형식이 올바르지 않습니다.")
         private String email;
 
         @NotBlank
@@ -27,6 +30,8 @@ import javax.validation.constraints.NotBlank;
 
         @NotBlank
         @JsonIgnore
+        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]*$",
+                message = "비밀번호 형식이 올바르지 않습니다.")
         private String password;
 
     @Builder
