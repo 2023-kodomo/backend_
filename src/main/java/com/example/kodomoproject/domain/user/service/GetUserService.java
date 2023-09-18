@@ -4,7 +4,6 @@ import com.example.kodomoproject.domain.product.controller.dto.response.UserProd
 import com.example.kodomoproject.domain.product.service.ProductFindByUserService;
 import com.example.kodomoproject.domain.user.controller.dto.UserResponse;
 import com.example.kodomoproject.domain.user.entity.User;
-import com.example.kodomoproject.domain.user.repository.UserRepository;
 import com.example.kodomoproject.domain.user.service.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
