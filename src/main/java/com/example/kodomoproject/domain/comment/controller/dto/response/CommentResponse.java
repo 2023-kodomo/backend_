@@ -1,5 +1,6 @@
 package com.example.kodomoproject.domain.comment.controller.dto.response;
 
+import com.example.kodomoproject.domain.comment.entity.Comment;
 import com.example.kodomoproject.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,4 +20,9 @@ public class CommentResponse {
 
     private Date createdDate;
 
+    public CommentResponse(Comment comment) {
+        this.writer = comment.getWriter();
+        this.content = comment.getContent();
+        this.createdDate = comment.getCreatedDate();
+    }
 }

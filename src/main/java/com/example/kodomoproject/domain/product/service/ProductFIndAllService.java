@@ -24,11 +24,7 @@ public class ProductFindAllService {
                 p.getPrice(),
                 p.getImageURL(),
                 p.getUploadDate(),
-                p.getComments().stream().map(r -> new CommentResponse(
-                        r.getWriter(),
-                        r.getContent(),
-                        r.getCreatedDate()
-                )).toList()
+                p.getComments().stream().map(CommentResponse::new).toList()
         )).toList();
     }
 

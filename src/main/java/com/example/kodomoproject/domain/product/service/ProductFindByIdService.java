@@ -22,11 +22,9 @@ public class ProductFindByIdService {
                 .price(product.getPrice())
                 .image(product.getImageURL())
                 .uploadDate(product.getUploadDate())
-                .comment(product.getComments().stream().map(r -> new CommentResponse(
-                        r.getWriter(),
-                        r.getContent(),
-                        r.getCreatedDate()
-                )).toList())
+                .comment(product.getComments().stream()
+                        .map(CommentResponse::new)
+                        .toList())
                 .build();
     }
 }
