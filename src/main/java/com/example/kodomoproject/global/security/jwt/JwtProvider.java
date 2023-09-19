@@ -96,7 +96,7 @@ public class JwtProvider {
     private UserDetails createAuthenticatedUserFromClaims(Claims claims) {
         String email = getEmail(claims);
         if (email.isBlank()){
-            throw UserNotFoundException.EXCEPTION;
+            throw InvalidDataException.EXCEPTION;
         }
         return new User(email, "", Collections.emptyList());
     }
