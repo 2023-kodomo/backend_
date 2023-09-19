@@ -1,6 +1,7 @@
 package com.example.kodomoproject.domain.product.controller.dto.response;
 
 import com.example.kodomoproject.domain.comment.controller.dto.response.CommentResponse;
+import com.example.kodomoproject.domain.product.entity.ProductDetails;
 import com.example.kodomoproject.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductResponse {
+    private String id;
+
     private User seller;
 
     private String title;
@@ -29,15 +32,16 @@ public class ProductResponse {
     private List<CommentResponse> comment;
 
     @Builder
-    public ProductResponse(User seller, String title, String content, Integer price,
-                           List<CommentResponse> comment, String image, Date uploadDate) {
+    public ProductResponse(String id, User seller, ProductDetails details,
+                           List<CommentResponse> comment) {
+        this.id = id;
         this.seller = seller;
-        this.title = title;
-        this.content = content;
-        this.price = price;
+        this.title = details.getTitle();
+        this.content = details.getContent();
+        this.price = details.getPrice();
         this.comment = comment;
-        this.image = image;
-        this.uploadDate = uploadDate;
+        this.image = details.getImage();
+        this.uploadDate = details.getUploadDate();
     }
 
 }
