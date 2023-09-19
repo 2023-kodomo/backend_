@@ -1,11 +1,14 @@
 package com.example.kodomoproject.global.security.jwt;
 
+import com.example.kodomoproject.domain.auth.entity.RefreshToken;
+import com.example.kodomoproject.domain.auth.repository.RefreshTokenRepository;
 import com.example.kodomoproject.global.security.jwt.exception.InvalidDataException;
 import com.example.kodomoproject.global.security.jwt.exception.JwtCreationFailedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,17 +20,25 @@ import java.util.Collections;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtProvider {
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Value("secret")
     private String secretKey;
 
     public String createAccessToken(String email) {
-        return createToken(email, "access", 7200000L);
+        return createToken(email, "access", 720L);
     }
 
     public String createRefreshToken(String email) {
-        return createToken(email, "refresh", 720000L);
+        String token = createToken(email, "refresh", 720000L);
+
+        refreshTokenRepository.save(RefreshToken.builder()
+                .token(token)
+                .user(email)
+                .build());
+        return token;
     }
 
     private String createToken(String email, String type, Long exp) {

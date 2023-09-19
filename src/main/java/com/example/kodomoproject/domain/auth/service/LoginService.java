@@ -25,9 +25,11 @@ public class LoginService {
             throw PasswordNotMatchedException.EXCEPTION;
         }
         String accessToken = jwtProvider.createAccessToken(request.getEmail());
+        String refreshToken = jwtProvider.createRefreshToken(request.getEmail());
 
         return LoginResponse.builder()
                 .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }

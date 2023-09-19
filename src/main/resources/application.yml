@@ -2,6 +2,10 @@ spring:
   data:
     mongodb:
       uri: ${spring.data.mongodb.uri}
+    redis:
+      host: ${spring.data.redis.host}
+      port: ${spring.data.redis.port}
+      password: ${spring.data.redis.password}
 
 jwt:
   secret: ${jwt.secret}
