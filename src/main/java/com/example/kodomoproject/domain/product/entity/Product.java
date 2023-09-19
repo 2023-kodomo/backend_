@@ -24,16 +24,12 @@ public class Product {
     @DBRef
     private User seller;
 
-    @NotBlank
     private String title;
 
-    @NotBlank
     private String content;
 
-    @NotBlank
     private Integer price;
 
-    @NotBlank
     private Date uploadDate;
 
     private String imageURL = "";
