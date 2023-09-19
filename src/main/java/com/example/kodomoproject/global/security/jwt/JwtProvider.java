@@ -1,7 +1,10 @@
 package com.example.kodomoproject.global.security.jwt;
 
+import com.example.kodomoproject.domain.auth.controller.dto.response.TokenResponse;
 import com.example.kodomoproject.domain.auth.entity.RefreshToken;
 import com.example.kodomoproject.domain.auth.repository.RefreshTokenRepository;
+import com.example.kodomoproject.domain.user.exception.UserNotFoundException;
+import com.example.kodomoproject.domain.user.repository.UserRepository;
 import com.example.kodomoproject.global.security.jwt.exception.InvalidDataException;
 import com.example.kodomoproject.global.security.jwt.exception.JwtCreationFailedException;
 import io.jsonwebtoken.Claims;
@@ -23,6 +26,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtProvider {
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
 
     @Value("secret")
     private String secretKey;
@@ -32,7 +36,7 @@ public class JwtProvider {
     }
 
     public String createRefreshToken(String email) {
-        String token = createToken(email, "refresh", 720000L);
+        String token = createToken("", "refresh", 720000L);
 
         refreshTokenRepository.save(RefreshToken.builder()
                 .token(token)
@@ -91,11 +95,28 @@ public class JwtProvider {
 
     private UserDetails createAuthenticatedUserFromClaims(Claims claims) {
         String email = getEmail(claims);
+        if (email.isBlank()){
+            throw UserNotFoundException.EXCEPTION;
+        }
         return new User(email, "", Collections.emptyList());
     }
 
     private String getEmail(Claims claims) {
         return claims.getSubject();
+    }
+
+    public TokenResponse reissue(String token) {
+        RefreshToken refreshToken = refreshTokenRepository.findById(token)
+                .orElseThrow(() -> InvalidDataException.EXCEPTION);
+        String email = userRepository.findByEmail(refreshToken.getUser())
+                .orElseThrow(() -> InvalidDataException.EXCEPTION).getEmail();
+
+        refreshTokenRepository.delete(refreshToken);
+
+        return TokenResponse.builder()
+                .accessToken(createAccessToken(email))
+                .refreshToken(createRefreshToken(email))
+                .build();
     }
 
 }
