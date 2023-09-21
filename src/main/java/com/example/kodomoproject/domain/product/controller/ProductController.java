@@ -8,6 +8,7 @@ import com.example.kodomoproject.domain.product.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,12 +22,12 @@ public class ProductController {
     private final ProductFindByIdService productFindByIdService;
 
     @PostMapping
-    public void createProduct(@RequestBody ProductRequest request) {
+    public void createProduct(@Valid @RequestBody ProductRequest request) {
         productCreateService.execute(request);
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@RequestBody ProductUpdateRequest request,
+    public Product updateProduct(@Valid @RequestBody ProductUpdateRequest request,
                                  @PathVariable String id) {
         return productModifyService.execute(request, id);
     }
