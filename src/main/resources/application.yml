@@ -2,6 +2,7 @@ spring:
   data:
     mongodb:
       uri: ${spring.data.mongodb.uri}
+      database: ${spring.data.mongodb.database}
     redis:
       host: ${spring.data.redis.host}
       port: ${spring.data.redis.port}
