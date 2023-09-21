@@ -3,7 +3,6 @@ package com.example.kodomoproject.global.security.jwt;
 import com.example.kodomoproject.domain.auth.controller.dto.response.TokenResponse;
 import com.example.kodomoproject.domain.auth.entity.RefreshToken;
 import com.example.kodomoproject.domain.auth.repository.RefreshTokenRepository;
-import com.example.kodomoproject.domain.user.exception.UserNotFoundException;
 import com.example.kodomoproject.domain.user.repository.UserRepository;
 import com.example.kodomoproject.global.security.jwt.exception.InvalidDataException;
 import com.example.kodomoproject.global.security.jwt.exception.JwtCreationFailedException;
