@@ -3,6 +3,7 @@ package com.example.kodomoproject.domain.product.controller.dto.request;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter
@@ -15,6 +16,7 @@ public class ProductUpdateRequest {
     @NotBlank
     private String content;
 
+    @Min(0)
     @NotBlank
     private Integer price;
 
