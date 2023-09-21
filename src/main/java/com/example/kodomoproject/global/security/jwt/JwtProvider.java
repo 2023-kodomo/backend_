@@ -27,7 +27,7 @@ public class JwtProvider {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
 
-    @Value("secret")
+    @Value("${jwt.secret}")
     private String secretKey;
 
     public String createAccessToken(String email) {
