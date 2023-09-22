@@ -3,24 +3,20 @@ package com.example.kodomoproject.domain.product.controller.dto.request;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Getter
 @NoArgsConstructor
 public class ProductRequest {
 
-    @NotBlank
+    @NotBlank(message = "제목이 비어있습니다.")
     private String title;
 
-    @NotNull
+    @NotBlank(message = "내용이 비어있습니다.")
     private String content;
 
-    @Min(0)
-    @Max(5000000)
-    @NotBlank
+    @NotNull
+    @PositiveOrZero(message = "가격은 0 또는 양수만 입력가능합니다.")
     private Integer price;
 
     private String image;
