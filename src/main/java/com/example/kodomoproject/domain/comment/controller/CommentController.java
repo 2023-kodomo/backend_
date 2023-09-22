@@ -6,6 +6,8 @@ import com.example.kodomoproject.domain.comment.service.CommentDeleteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/comment")
 @RequiredArgsConstructor
@@ -13,7 +15,7 @@ public class CommentController {
     private final CommentCreateService createService;
     private final CommentDeleteService deleteService;
     @PostMapping
-    public void create(@RequestBody CommentRequest request) {
+    public void create(@Valid @RequestBody CommentRequest request) {
         createService.execute(request);
     }
 

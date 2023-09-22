@@ -29,12 +29,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody LoginRequest request) {
+    public TokenResponse login(@Valid @RequestBody LoginRequest request) {
         return loginService.execute(request);
     }
 
     @PostMapping("/reissue")
-    public TokenResponse reissue(@RequestBody ReissueRequest request) {
+    public TokenResponse reissue(@Valid @RequestBody ReissueRequest request) {
         return reissueService.execute(request);
     }
 
