@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.14'
+    id 'org.springframework.boot' version '3.1.1'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -35,6 +35,15 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
     implementation 'org.springframework.boot:spring-boot-devtools'
+
+    implementation 'com.google.zxing:core:3.5.0'
+    implementation 'com.google.zxing:javase:3.5.0'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
 tasks.named('test') {
