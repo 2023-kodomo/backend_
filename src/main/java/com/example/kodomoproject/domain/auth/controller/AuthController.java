@@ -7,13 +7,11 @@ import com.example.kodomoproject.domain.auth.controller.dto.response.TokenRespon
 import com.example.kodomoproject.domain.auth.service.LoginService;
 import com.example.kodomoproject.domain.auth.service.ReissueService;
 import com.example.kodomoproject.domain.auth.service.SignupService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -34,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/reissue")
-    public TokenResponse reissue(@Valid @RequestBody ReissueRequest request) {
+    public TokenResponse reissueToken(@Valid @RequestBody ReissueRequest request) {
         return reissueService.execute(request);
     }
 

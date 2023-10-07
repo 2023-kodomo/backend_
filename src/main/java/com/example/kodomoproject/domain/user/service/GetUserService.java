@@ -1,13 +1,18 @@
 package com.example.kodomoproject.domain.user.service;
 
-import com.example.kodomoproject.domain.product.controller.dto.response.UserProductResponse;
+import com.example.kodomoproject.domain.product.controller.dto.response.ProductDetailResponse;
 import com.example.kodomoproject.domain.product.service.ProductFindByUserService;
-import com.example.kodomoproject.domain.user.controller.dto.UserResponse;
+import com.example.kodomoproject.domain.qr.request.QrRequest;
+import com.example.kodomoproject.domain.qr.service.QrGenerateService;
+import com.example.kodomoproject.domain.user.controller.dto.response.UserResponse;
 import com.example.kodomoproject.domain.user.entity.User;
 import com.example.kodomoproject.domain.user.service.facade.UserFacade;
+import com.google.zxing.WriterException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 @Service
@@ -15,10 +20,14 @@ import java.util.List;
 public class GetUserService {
     private final ProductFindByUserService productFindByUserService;
     private final UserFacade userFacade;
+    private final QrGenerateService qrGenerateService;
+
+    @Value("${app.url}")
+    private String defaultURL;
 
     public UserResponse myInfo() {
         User user = userFacade.getUser();
-        List<UserProductResponse> products = productFindByUserService.execute(user.getId());
+        List<ProductDetailResponse> products = productFindByUserService.execute(user.getId());
 
         return  UserResponse.builder()
                 .id(user.getId())
@@ -30,7 +39,7 @@ public class GetUserService {
 
     public UserResponse otherUser(String id) {
         User user = userFacade.getUserById(id);
-        List<UserProductResponse> products = productFindByUserService.execute(user.getId());
+        List<ProductDetailResponse> products = productFindByUserService.execute(user.getId());
 
         return  UserResponse.builder()
                 .id(user.getId())
@@ -38,6 +47,16 @@ public class GetUserService {
                 .email(user.getEmail())
                 .product(products)
                 .build();
+    }
+
+    public BufferedImage userQR() throws WriterException {
+        User user = userFacade.getUser();
+
+        String url = defaultURL + "/user" + user.getId();
+
+        QrRequest qrRequest = new QrRequest(url);
+
+        return qrGenerateService.execute(qrRequest);
     }
 
 }

@@ -1,6 +1,6 @@
-package com.example.kodomoproject.global.exception;
+package com.example.kodomoproject.global.error.exception;
 
-import com.example.kodomoproject.global.exception.error.ErrorCode;
+import com.example.kodomoproject.global.error.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

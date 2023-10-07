@@ -3,10 +3,10 @@ package com.example.kodomoproject.domain.comment.controller;
 import com.example.kodomoproject.domain.comment.controller.dto.request.CommentRequest;
 import com.example.kodomoproject.domain.comment.service.CommentCreateService;
 import com.example.kodomoproject.domain.comment.service.CommentDeleteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/comment")

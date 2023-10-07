@@ -1,6 +1,6 @@
-package com.example.kodomoproject.global.exception;
+package com.example.kodomoproject.global.error.exception;
 
-import com.example.kodomoproject.global.exception.error.ErrorResponse;
+import com.example.kodomoproject.global.error.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

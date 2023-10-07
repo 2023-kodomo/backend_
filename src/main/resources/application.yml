@@ -1,12 +1,48 @@
 spring:
   data:
     mongodb:
-      uri: ${spring.data.mongodb.uri}
-      database: ${spring.data.mongodb.database}
+      uri: ${MONGODB_URI}
+      database: ${MONGODB}
+
     redis:
-      host: ${spring.data.redis.host}
-      port: ${spring.data.redis.port}
-      password: ${spring.data.redis.password}
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 3MB
 
 jwt:
-  secret: ${jwt.secret}
+  secret: ${JWT_SECRET}
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_SECRET}
+      secret-key: ${AWS_ACCESS}
+    s3:
+      bucket: ${S3_BUCKET}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+mail:
+  smtp:
+    auth: true
+    starttls:
+      required: true
+      enable: true
+    socketFactory:
+      class: javax.net.ssl.SSLSocketFactory
+      fallback: false
+    port: 465
+
+AdminMail:
+  id: ${ADMIN_MAIL}
+  password: ${ADMIN_PASSWORD}
+
+app:
+  url: "http://localhost:8080"

@@ -10,4 +10,6 @@ public interface ProductRepository extends MongoRepository<Product, String> {
     @Query(sort = "{uploadDate: -1}")
     List<Product> findBySellerId(String id);
 
+    @Query(sort = "{uploadDate:  -1}")
+    List<Product> findByTitleContaining(String input);
 }

@@ -30,7 +30,8 @@ public class ProductFindAllService {
                 p.getComments()
                         .stream()
                         .map(CommentResponse::new)
-                        .toList()))
+                        .toList(),
+                p.getPlace()))
                 .toList();
     }
 

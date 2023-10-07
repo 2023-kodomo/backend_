@@ -27,6 +27,7 @@ public class ProductFindByIdService {
         return ProductResponse.builder()
                 .seller(product.getSeller())
                 .details(details)
+                .place(product.getPlace())
                 .comment(product.getComments().stream()
                         .map(CommentResponse::new)
                         .toList())

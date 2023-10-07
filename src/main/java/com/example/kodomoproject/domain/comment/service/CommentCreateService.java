@@ -25,8 +25,10 @@ public class CommentCreateService {
 
     public void execute(CommentRequest request) {
         User user = userFacade.getUser();
-        Product product = productFacade.getProductById(request.getProductId());
+        String productId = request.getProductId();
+        Product product = productFacade.getProductById(productId);
         Date now = dateFacade.getNowDate();
+
         Comment comment = Comment.builder()
                 .writer(user)
                 .content(request.getContent())
@@ -35,7 +37,10 @@ public class CommentCreateService {
                 .build();
 
         commentRepository.save(comment);
+        addCommentToProduct(product, comment);
+    }
 
+    private void addCommentToProduct(Product product, Comment comment) {
         product.getComments().add(comment);
         productRepository.save(product);
     }

@@ -3,15 +3,15 @@ package com.example.kodomoproject.global.facade;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Component
 public class DateFacade {
 
     public Date getNowDate() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        ZoneId zoneId = ZoneId.systemDefault();
-        return Date.from(localDateTime.atZone(zoneId).toInstant());
+        return Date.from(LocalDateTime.now()
+                .atZone(TimeZone.getDefault().toZoneId())
+                .toInstant());
     }
 }

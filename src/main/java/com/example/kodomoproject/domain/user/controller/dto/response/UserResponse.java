@@ -1,7 +1,6 @@
-package com.example.kodomoproject.domain.user.controller.dto;
+package com.example.kodomoproject.domain.user.controller.dto.response;
 
-import com.example.kodomoproject.domain.product.controller.dto.response.ProductResponse;
-import com.example.kodomoproject.domain.product.controller.dto.response.UserProductResponse;
+import com.example.kodomoproject.domain.product.controller.dto.response.ProductDetailResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +19,6 @@ public class UserResponse {
 
     private String email;
 
-    private List<UserProductResponse> product;
+    private List<ProductDetailResponse> product;
 
 }

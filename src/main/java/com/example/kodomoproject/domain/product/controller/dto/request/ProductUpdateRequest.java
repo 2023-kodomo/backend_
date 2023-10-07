@@ -1,14 +1,15 @@
 package com.example.kodomoproject.domain.product.controller.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductUpdateRequest {
 
     @NotBlank
@@ -17,11 +18,10 @@ public class ProductUpdateRequest {
     @NotBlank
     private String content;
 
-    @Min(0)
-    @Max(5000000)
-    @NotBlank
+    @NotNull
+    @PositiveOrZero
     private Integer price;
 
-    private String image;
+    private String place;
 
 }

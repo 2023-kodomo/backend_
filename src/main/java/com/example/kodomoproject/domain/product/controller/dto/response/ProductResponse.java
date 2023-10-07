@@ -31,9 +31,11 @@ public class ProductResponse {
 
     private List<CommentResponse> comment;
 
+    private String place;
+
     @Builder
     public ProductResponse(String id, User seller, ProductDetails details,
-                           List<CommentResponse> comment) {
+                           List<CommentResponse> comment, String place) {
         this.id = id;
         this.seller = seller;
         this.title = details.getTitle();
@@ -42,6 +44,7 @@ public class ProductResponse {
         this.comment = comment;
         this.image = details.getImage();
         this.uploadDate = details.getUploadDate();
+        this.place = place;
     }
 
 }

@@ -12,14 +12,16 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProductResponse {
+public class ProductDetailResponse {
+    private String id;
     private String title;
     private String content;
     private Integer price;
     private String image;
     private Date uploadDate;
 
-    public UserProductResponse(Product product) {
+    public ProductDetailResponse(Product product) {
+        this.id = product.getId();
         this.title = product.getTitle();
         this.content = product.getContent();
         this.price = product.getPrice();

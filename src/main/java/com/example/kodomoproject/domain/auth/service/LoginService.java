@@ -3,7 +3,9 @@ package com.example.kodomoproject.domain.auth.service;
 import com.example.kodomoproject.domain.auth.controller.dto.request.LoginRequest;
 import com.example.kodomoproject.domain.auth.controller.dto.response.TokenResponse;
 import com.example.kodomoproject.domain.auth.exception.PasswordNotMatchedException;
+import com.example.kodomoproject.domain.auth.exception.RoleNotMatchException;
 import com.example.kodomoproject.domain.user.entity.User;
+import com.example.kodomoproject.domain.user.entity.UserRole;
 import com.example.kodomoproject.domain.user.exception.UserNotFoundException;
 import com.example.kodomoproject.domain.user.repository.UserRepository;
 import com.example.kodomoproject.global.security.jwt.JwtProvider;
@@ -21,9 +23,15 @@ public class LoginService {
     public TokenResponse execute(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw PasswordNotMatchedException.EXCEPTION;
         }
+
+        if (user.getRole()!= UserRole.USER) {
+            throw RoleNotMatchException.EXCEPTION;
+        }
+
         String accessToken = jwtProvider.createAccessToken(request.getEmail());
         String refreshToken = jwtProvider.createRefreshToken(request.getEmail());
 
