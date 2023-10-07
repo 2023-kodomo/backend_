@@ -33,16 +33,51 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/directors-dev .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/directors-dev
+
+      # GET GitHub IP (5)
+      - name: get GitHub IP 
+        id: ip
+        uses: haythem/public-ip@v1.2
+      
+      # Configure AWS Credentials (6) - AWS 접근 권한 취득(IAM)
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with: 
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+    
+      # Add github ip to AWS (7)
+      - name: Add GitHub IP to AWS
+        run: |
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+    
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         id: deploy
         with:
           host: ${{ secrets.HOST }}
+          password: ${{ secrets.EC2_PASSWORD }}
           username: ubuntu
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            sudo docker rm -f $(docker ps -qa)
+            # Check SSH connectivity
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22 ${{ secrets.HOST }} "echo SSH connection successful"
+
+            # Remove existing Docker containers
+            sudo docker rm -f $(sudo docker ps -qa)
+
+            # Pull the Docker image
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/directors-dev
-            docker-compose up -d
-            docker image prune -f
+
+            # Navigate to the directory containing your docker-compose.yml file
+            cd /path/to/your/docker-compose/directory
+
+            # Start the containers using Docker Compose
+            sudo docker-compose up -d
+
+            # Prune old Docker images (optional)
+            sudo docker image prune -f
+
