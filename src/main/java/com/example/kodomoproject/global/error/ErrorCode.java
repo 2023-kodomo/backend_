@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
     ALREADY_EXIST(400, "유저가 이미 존재합니다."),
-    PASSWORD_NOT_MATCHES(400, "배포 테스트"),
+    PASSWORD_NOT_MATCHES(400, "비밀번호가 일치하지 않습니다."),
     JWT_GENERATION_FAILED(400, "JWT 생성 실패"),
     INVALID_DATA(400, "잘못 된 데이터"),
     IMAGE_UPLOAD_FAILED(400, "이미지 업로드 실패"),
