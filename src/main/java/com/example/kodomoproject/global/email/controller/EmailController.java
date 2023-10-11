@@ -31,4 +31,5 @@ public class EmailController {
     public void reissueAuthCode(@RequestBody EmailRequest request) {
         emailService.reissue(request);
     }
+
 }

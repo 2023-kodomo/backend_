@@ -7,6 +7,6 @@ public class RoleNotMatchException extends CustomException {
     public static final CustomException EXCEPTION = new RoleNotMatchException();
 
     private RoleNotMatchException() {
-        super(ErrorCode.ROLE_NOT_MATCHES);
+        super(ErrorCode.FORBIDDEN);
     }
 }

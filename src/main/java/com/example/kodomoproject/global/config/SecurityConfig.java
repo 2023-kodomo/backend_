@@ -61,9 +61,6 @@ public class SecurityConfig {
                         .requestMatchers(WHITE_LIST).permitAll()
                         .anyRequest().authenticated())
 
-                .exceptionHandling(exceptionConfig -> exceptionConfig
-                        .accessDeniedHandler(accessDeniedHandler()))
-
                 .addFilterBefore(new JwtAuthFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
@@ -75,19 +72,6 @@ public class SecurityConfig {
         config.applyPermitDefaultValues();
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
-    }
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return (request, response, accessDeniedException) -> {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403
-            response.setContentType("application/json;charset=UTF-8");
-//            ErrorResponse errorResponse = ErrorResponse.of(403, "권한이 없습니다");
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            String error = objectMapper.writeValueAsString(errorResponse);
-//            response.getWriter().write(error);
-            response.getWriter().write("권한없음");
-        };
     }
 
 }

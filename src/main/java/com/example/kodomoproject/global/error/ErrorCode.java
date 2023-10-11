@@ -18,7 +18,7 @@ public enum ErrorCode {
 
     TIME_EXPIRATION(401, "시간 만료"),
 
-    ROLE_NOT_MATCHES(403, "권한이 없습니다."),
+    FORBIDDEN(403, "권한이 없습니다."),
 
     IMAGE_NOT_FOUND(404, "이미지를 찾지 못했습니다."),
     COMMENT_NOT_FOUND(404, "댓글을 찾지 못했습니다."),
