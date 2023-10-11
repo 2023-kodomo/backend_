@@ -34,7 +34,7 @@ public class EmailService {
     private static final Random rnd = new Random();
     private static final String ENCODING = "UTF-8";
 
-    private static final String MISMATCH_MESSAGE = "인증코드 불일치";
+    private static final String MISMATCH_MESSAGE = "인증코드가 일치하지 않습니다.";
     private static final String VERIFIED_MESSAGE = "인증코드가 확인되었습니다.";
 
     private MimeMessage sendEmailForAuth(String to) throws MessagingException, UnsupportedEncodingException {
