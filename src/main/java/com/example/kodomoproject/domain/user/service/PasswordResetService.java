@@ -55,7 +55,7 @@ public class PasswordResetService {
         if (verify(token)) {
             return PasswordResetResponse.builder()
                     .user(getUserEmail(token))
-                    .message("인증에 성공했어요")
+                    .message("인증에 성공했어요.")
                     .build();
         } else {
             throw TimeExpirationException.EXCEPTION;

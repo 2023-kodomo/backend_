@@ -38,9 +38,7 @@ public class SecurityConfig {
     }
 
     private static final String[] WHITE_LIST = {
-            "/auth/**",
-            "/user/password-reset/v/**",
-            "/user/password-reset/r/**"
+            "/**"
     };
 
     @Bean
