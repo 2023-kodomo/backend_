@@ -5,6 +5,7 @@ import com.example.kodomoproject.domain.user.entity.User;
 import com.example.kodomoproject.domain.user.entity.UserRole;
 import com.example.kodomoproject.domain.user.repository.UserRepository;
 import com.example.kodomoproject.domain.user.service.facade.UserFacade;
+import com.example.kodomoproject.global.email.controller.dto.EmailRequest;
 import com.example.kodomoproject.global.email.exception.MailSendException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -136,8 +137,10 @@ public class EmailService {
             sendSimpleMessage(message);
     }
 
-    public void sendAuthCode(String to) throws MessagingException, UnsupportedEncodingException {
-        MimeMessage message = sendEmailForAuth(to);
+    public void sendAuthCode(EmailRequest request) throws MessagingException, UnsupportedEncodingException {
+        String email = request.getEmail();
+        User user = userFacade.getUserByEmail(email);
+        MimeMessage message = sendEmailForAuth(user.getEmail());
 
         sendSimpleMessage(message);
     }
@@ -166,7 +169,8 @@ public class EmailService {
         return key.toString();
     }
 
-    public EmailVerifyResponse verifyEmail(String authCode, String email) {
+    public EmailVerifyResponse verifyEmail(String authCode, EmailRequest request) {
+        String email = request.getEmail();
         if (isVerify(authCode, email)) {
             authCodeDao.deleteAuthCode(email);
             User user = userFacade.getUserByEmail(email);
@@ -191,12 +195,14 @@ public class EmailService {
                         .equals(authCode));
     }
 
-    public void reissue(String email) {
+    public void reissue(EmailRequest request) {
+        User user = userFacade.getUserByEmail(request.getEmail());
+        String email = user.getEmail();
         if (authCodeDao.hasKey(email)) {
             authCodeDao.deleteAuthCode(email);
         }
         try {
-            sendAuthCode(email);
+            sendAuthCode(request);
         } catch (MessagingException | UnsupportedEncodingException e) {
             throw MailSendException.EXCEPTION;
         }

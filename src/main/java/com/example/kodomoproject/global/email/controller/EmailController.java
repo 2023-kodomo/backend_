@@ -1,6 +1,7 @@
 package com.example.kodomoproject.global.email.controller;
 
 import com.example.kodomoproject.domain.auth.controller.dto.response.EmailVerifyResponse;
+import com.example.kodomoproject.global.email.controller.dto.EmailRequest;
 import com.example.kodomoproject.global.email.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.constraints.Email;
@@ -15,18 +16,19 @@ import java.io.UnsupportedEncodingException;
 public class EmailController {
     private final EmailService emailService;
 
-    @PostMapping("/send/{email}")
-    public void emailConfirm(@Email @PathVariable String email) throws MessagingException, UnsupportedEncodingException {
-        emailService.sendAuthCode(email);
+    @PostMapping("/send")
+    public void emailConfirm(@RequestBody EmailRequest request) throws MessagingException, UnsupportedEncodingException {
+        emailService.sendAuthCode(request);
     }
 
-    @GetMapping("/{email}/verify/{authCode}")
-    public EmailVerifyResponse verifyEmail(@PathVariable String authCode, @Email @PathVariable String email) {
-        return emailService.verifyEmail(authCode, email);
+    @GetMapping("/verify/{authCode}")
+    public EmailVerifyResponse verifyEmail(@PathVariable String authCode,
+                                           @RequestBody EmailRequest request) {
+        return emailService.verifyEmail(authCode, request);
     }
 
-    @PostMapping("/reissue/{email}")
-    public void reissueAuthCode(@Email @PathVariable String email) {
-        emailService.reissue(email);
+    @PostMapping("/reissue")
+    public void reissueAuthCode(@RequestBody EmailRequest request) {
+        emailService.reissue(request);
     }
 }
