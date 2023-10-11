@@ -21,7 +21,7 @@ public class EmailController {
         emailService.sendAuthCode(request);
     }
 
-    @GetMapping("/verify/{authCode}")
+    @PostMapping("/verify/{authCode}")
     public EmailVerifyResponse verifyEmail(@PathVariable String authCode,
                                            @RequestBody EmailRequest request) {
         return emailService.verifyEmail(authCode, request);
