@@ -29,7 +29,7 @@ public class ErrorResponse {
     public static ResponseEntity<ErrorResponse> fromValidationException(MethodArgumentNotValidException e) {
         FieldError fieldError = e.getBindingResult().getFieldError();
         int status = HttpStatus.BAD_REQUEST.value();
-        String message = fieldError != null ? fieldError.getDefaultMessage() : "실패";
+        String message = fieldError != null ? fieldError.getDefaultMessage() : "Bad Request";
 
         return ResponseEntity
                 .status(status)
