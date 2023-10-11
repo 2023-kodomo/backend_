@@ -19,9 +19,9 @@ public class CommentController {
         createService.execute(request);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        deleteService.deleteById(id);
+    @DeleteMapping("/{commentId}")
+    public void delete(@PathVariable String commentId) {
+        deleteService.deleteById(commentId);
     }
 
 }
