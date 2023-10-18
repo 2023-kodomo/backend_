@@ -47,4 +47,16 @@ public class ProductResponse {
         this.place = place;
     }
 
+    @Builder
+    public ProductResponse(String id, User seller, ProductDetails productDetails, String place) {
+        this.id = id;
+        this.seller = seller;
+        this.title = productDetails.getTitle();
+        this.content = productDetails.getContent();
+        this.price = productDetails.getPrice();
+        this.image = productDetails.getImage();
+        this.uploadDate = productDetails.getUploadDate();
+        this.place = place;
+    }
+
 }

@@ -25,7 +25,7 @@ public class Comment {
 
     private String content;
 
-    @DBRef
+    @DBRef(lazy = true)
     private Product product;
 
     private Date createdDate;

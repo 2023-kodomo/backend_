@@ -25,6 +25,7 @@ public class ProductFindByIdService {
                 .build();
 
         return ProductResponse.builder()
+                .id(product.getId())
                 .seller(product.getSeller())
                 .details(details)
                 .place(product.getPlace())

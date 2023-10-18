@@ -27,11 +27,11 @@ public class ProductFindAllService {
                         p.getPrice(),
                         p.getImageURL(),
                         p.getUploadDate()),
-                p.getComments()
-                        .stream()
-                        .map(CommentResponse::new)
-                        .toList(),
-                p.getPlace()))
+//                        p.getComments()
+//                                .stream()
+//                                .map(CommentResponse::new)
+//                                .toList(),
+                        p.getPlace()))
                 .toList();
     }
 

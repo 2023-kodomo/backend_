@@ -11,6 +11,8 @@ import com.example.kodomoproject.global.s3.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +27,11 @@ public class ProductDeleteService {
         User user = userFacade.getUser();
         Product product = productFacade.getProductById(id);
 
-        if (product.getSeller() == user) {
+        if (Objects.equals(product.getSeller().getId(), user.getId())) {
             String imageURL = product.getImageURL();
-            s3Service.deleteImageByURL(imageURL);
+            if (!imageURL.isBlank()) {
+                s3Service.deleteImageByURL(imageURL);
+            }
             productRepository.deleteById(product.getId());
             cascadeDeleteComment(id);
         } else {

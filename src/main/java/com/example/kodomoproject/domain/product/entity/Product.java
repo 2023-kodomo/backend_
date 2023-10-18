@@ -5,6 +5,7 @@ import com.example.kodomoproject.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Document
 public class Product {
@@ -33,7 +35,7 @@ public class Product {
 
     private String imageURL = "";
 
-    @DBRef
+    @DBRef(lazy = true)
     private List<Comment> comments = new ArrayList<>();
 
     private String place = "미정";
