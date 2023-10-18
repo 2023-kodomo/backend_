@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -132,11 +133,13 @@ public class EmailService {
                 + "</div>";
     }
 
+    @Async
     public void sendSuccessPasswordReset(String to) throws MessagingException {
             MimeMessage message = sendMailForSuccessPasswordReset(to);
             sendSimpleMessage(message);
     }
 
+    @Async
     public void sendAuthCode(EmailRequest request) throws MessagingException, UnsupportedEncodingException {
         String email = request.getEmail();
         User user = userFacade.getUserByEmail(email);
