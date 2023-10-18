@@ -6,6 +6,7 @@ import com.example.kodomoproject.domain.user.entity.UserRole;
 import com.example.kodomoproject.domain.user.repository.UserRepository;
 import com.example.kodomoproject.domain.user.service.facade.UserFacade;
 import com.example.kodomoproject.global.email.controller.dto.EmailRequest;
+import com.example.kodomoproject.global.email.exception.AlreadyAuthenticatedUserException;
 import com.example.kodomoproject.global.email.exception.MailSendException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -143,6 +144,11 @@ public class EmailService {
     public void sendAuthCode(EmailRequest request) throws MessagingException, UnsupportedEncodingException {
         String email = request.getEmail();
         User user = userFacade.getUserByEmail(email);
+
+        if (user.getRole() == UserRole.USER) {
+            throw AlreadyAuthenticatedUserException.EXCEPTION;
+        }
+
         MimeMessage message = sendEmailForAuth(user.getEmail());
 
         sendSimpleMessage(message);

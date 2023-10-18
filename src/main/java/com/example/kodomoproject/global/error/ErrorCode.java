@@ -16,6 +16,7 @@ public enum ErrorCode {
     MAIL_CONFIRM_FAILED(400, "메일 전송 실패"),
     QR_GENERATION_FAILED(400, "QR 코드 생성 실패"),
     USER_NOT_MATCHES(400, "현재 사용자에겐 권한이 없습니다."),
+    ALREADY_AUTHENTICATED_USER(400, "이미 인증된 사용자입니다."),
 
     TIME_EXPIRATION(401, "시간 만료"),
 
