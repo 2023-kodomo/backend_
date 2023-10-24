@@ -1,5 +1,6 @@
 package com.example.kodomoproject.domain.product.service;
 
+import com.example.kodomoproject.domain.product.collection.ProductCollection;
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductDetailResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
 import com.example.kodomoproject.domain.product.repository.ProductRepository;
@@ -18,10 +19,10 @@ public class ProductFindByUserService {
 
     public List<ProductDetailResponse> execute(String id) {
         User user = userFacade.getUserById(id);
-        List<Product> products = productRepository.findBySellerId(user.getId());
 
-        return products.stream()
-                .map(ProductDetailResponse::new)
-                .toList();
+        List<Product> products = productRepository.findBySellerId(user.getId());
+        ProductCollection productCollection = new ProductCollection(products);
+
+        return productCollection.toProductDetailResponses();
     }
 }

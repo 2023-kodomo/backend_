@@ -1,7 +1,7 @@
 package com.example.kodomoproject.domain.product.service;
 
-import com.example.kodomoproject.domain.comment.controller.dto.response.CommentResponse;
-import com.example.kodomoproject.domain.product.controller.dto.response.ProductResponse;
+import com.example.kodomoproject.domain.product.collection.ProductCollection;
+import com.example.kodomoproject.domain.product.controller.dto.response.ProductDetailResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
 import com.example.kodomoproject.domain.product.entity.ProductDetails;
 import com.example.kodomoproject.domain.product.repository.ProductRepository;
@@ -15,24 +15,11 @@ import java.util.List;
 public class ProductFindAllService {
     private final ProductRepository productRepository;
 
-    public List<ProductResponse> execute() {
+    public List<ProductDetailResponse> execute() {
         List<Product> productList = productRepository.findAll();
+        ProductCollection productCollection = new ProductCollection(productList);
 
-        return productList.stream().map(p -> new ProductResponse(
-                p.getId(),
-                p.getSeller(),
-                new ProductDetails(
-                        p.getTitle(),
-                        p.getContent(),
-                        p.getPrice(),
-                        p.getImageURL(),
-                        p.getUploadDate()),
-//                        p.getComments()
-//                                .stream()
-//                                .map(CommentResponse::new)
-//                                .toList(),
-                        p.getPlace()))
-                .toList();
+        return productCollection.toProductDetailResponses();
     }
 
 }

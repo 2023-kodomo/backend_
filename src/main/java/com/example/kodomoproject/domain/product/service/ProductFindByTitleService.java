@@ -1,5 +1,6 @@
 package com.example.kodomoproject.domain.product.service;
 
+import com.example.kodomoproject.domain.product.collection.ProductCollection;
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductDetailResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
 import com.example.kodomoproject.domain.product.repository.ProductRepository;
@@ -16,9 +17,9 @@ public class ProductFindByTitleService {
     public List<ProductDetailResponse> execute(String input) {
         List<Product> products = productRepository.findByTitleContaining(input);
 
-        return products.stream()
-                .map(ProductDetailResponse::new)
-                .toList();
+        ProductCollection productCollection = new ProductCollection(products);
+
+        return productCollection.toProductDetailResponses();
     }
 
 }
