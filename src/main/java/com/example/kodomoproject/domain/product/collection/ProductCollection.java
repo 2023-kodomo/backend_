@@ -3,14 +3,13 @@ package com.example.kodomoproject.domain.product.collection;
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductDetailResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCollection {
     private final List<Product> products;
 
     public ProductCollection(List<Product> products) {
-        this.products = new ArrayList<>(products);
+        this.products = products;
     }
 
     public List<ProductDetailResponse> toProductDetailResponses() {
