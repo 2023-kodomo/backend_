@@ -5,6 +5,7 @@ import com.example.kodomoproject.domain.product.controller.dto.request.ProductUp
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductResponse;
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductDetailResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
+import com.example.kodomoproject.domain.product.entity.ProductDetails;
 import com.example.kodomoproject.domain.product.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponse> findAll() {
+    public List<ProductDetailResponse> findAll() {
         return productFindAllService.execute();
     }
 

@@ -29,4 +29,12 @@ public class ProductDetails {
         this.uploadDate = uploadDate;
     }
 
+    public ProductDetails(Product product) {
+        this.title = product.getTitle();
+        this.content = product.getContent();
+        this.price = product.getPrice();
+        this.image = product.getImageURL();
+        this.uploadDate = product.getUploadDate();
+    }
+
 }
