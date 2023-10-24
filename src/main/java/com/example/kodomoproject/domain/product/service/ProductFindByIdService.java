@@ -1,5 +1,6 @@
 package com.example.kodomoproject.domain.product.service;
 
+import com.example.kodomoproject.domain.comment.collection.CommentCollection;
 import com.example.kodomoproject.domain.comment.controller.dto.response.CommentResponse;
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
@@ -24,14 +25,15 @@ public class ProductFindByIdService {
                 .uploadDate(product.getUploadDate())
                 .build();
 
+        CommentCollection commentCollection =
+                new CommentCollection(product.getComments());
+
         return ProductResponse.builder()
                 .id(product.getId())
                 .seller(product.getSeller())
                 .details(details)
                 .place(product.getPlace())
-                .comment(product.getComments().stream()
-                        .map(CommentResponse::new)
-                        .toList())
+                .comment(commentCollection.toCommentResponse())
                 .build();
     }
 }
