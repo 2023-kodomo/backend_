@@ -3,6 +3,7 @@ package com.example.kodomoproject.domain.auth.controller;
 import com.example.kodomoproject.domain.auth.controller.dto.request.LoginRequest;
 import com.example.kodomoproject.domain.auth.controller.dto.request.ReissueRequest;
 import com.example.kodomoproject.domain.auth.controller.dto.request.SignupRequest;
+import com.example.kodomoproject.domain.auth.controller.dto.response.RefreshResponse;
 import com.example.kodomoproject.domain.auth.controller.dto.response.TokenResponse;
 import com.example.kodomoproject.domain.auth.service.LoginService;
 import com.example.kodomoproject.domain.auth.service.ReissueService;
@@ -32,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/reissue")
-    public TokenResponse reissueToken(@Valid @RequestBody ReissueRequest request) {
+    public RefreshResponse reissueToken(@Valid @RequestBody ReissueRequest request) {
         return reissueService.execute(request);
     }
 

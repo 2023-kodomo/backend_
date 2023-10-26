@@ -1,5 +1,6 @@
 package com.example.kodomoproject.global.security.jwt;
 
+import com.example.kodomoproject.domain.auth.controller.dto.response.RefreshResponse;
 import com.example.kodomoproject.domain.auth.controller.dto.response.TokenResponse;
 import com.example.kodomoproject.domain.auth.entity.RefreshToken;
 import com.example.kodomoproject.domain.auth.repository.RefreshTokenRepository;
@@ -112,18 +113,15 @@ public class JwtProvider {
         return claims.getSubject();
     }
 
-    public TokenResponse reissue(String token) {
+    public RefreshResponse reissue(String token) {
         RefreshToken refreshToken = refreshTokenRepository.findById(token)
                 .orElseThrow(() -> InvalidDataException.EXCEPTION);
         String email = userRepository.findByEmail(refreshToken.getUser()
                         .substring(RedisKey.REFRESH.getKey().length()))
                 .orElseThrow(() -> InvalidDataException.EXCEPTION).getEmail();
 
-        refreshTokenRepository.delete(refreshToken);
-
-        return TokenResponse.builder()
+        return RefreshResponse.builder()
                 .accessToken(createAccessToken(email))
-                .refreshToken(createRefreshToken(email))
                 .build();
     }
 
