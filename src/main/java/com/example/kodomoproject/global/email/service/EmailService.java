@@ -59,21 +59,10 @@ public class EmailService {
     }
 
     private String getEmailTemplateForAuth(String authKey) {
-        return "<div style='margin:20px;'>"
-                + "<br>"
-                + "<br>"
-                + "<div align='center';>"
-                + "<h1>이메일 인증 코드입니다.</h1>"
-//                + "<img src=\"" + imageUrl + "\"></div>\n"
-                + "<br>"
-                + "<div align='center'>"
-                + "<p>아래의 코드를 화면에 입력해주세요.</p></div>\n"
-                + "<div align='center' style='border:1px solid black; font-family:verdana';>"
-                + "<br>"
-                + "<br>"
-                + "<div style='font-size:130%'>"
-                + "<strong>" + authKey + "</strong><div><br/> "
-                + "<br>"
+        return "<div style='margin: 10px; background-color: #f5f5f5; padding: 20px; border-radius: 10px;'>"
+                + "<p style='font-size: 16px; color: #333;'><b><span style='color: #007bff;'>D</span><span style='color: #ffcc00;'>S</span><span style='color: #ff0000;'>M</span></b> 이메일 인증 코드 :</p>"
+                + "<p style='font-size: 24px; font-weight: bold; color: #007bff; letter-spacing: 3px;'>" + authKey + "</p>"
+                + "<p style='font-size: 14;font-style: italic; color: #999;'>인증 코드는 3시간 동안 유효합니다.</p>"
                 + "</div>";
     }
 
