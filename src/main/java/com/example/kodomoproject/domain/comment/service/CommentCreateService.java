@@ -25,13 +25,13 @@ public class CommentCreateService {
 
     public void execute(CommentRequest request) {
         User user = userFacade.getUser();
-        String productId = request.getProductId();
+        String productId = request.productId();
         Product product = productFacade.getProductById(productId);
         Date now = dateFacade.getNowDate();
 
         Comment comment = Comment.builder()
                 .writer(user)
-                .content(request.getContent())
+                .content(request.content())
                 .product(product)
                 .createdDate(now)
                 .build();
