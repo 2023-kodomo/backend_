@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductCreateService productCreateService;
@@ -47,7 +47,7 @@ public class ProductController {
         return productModifyService.execute(request, productId, image);
     }
 
-    @GetMapping("/view/{productId}")
+    @GetMapping("/{productId}")
     public ProductResponse findById(@PathVariable String productId) {
         return productFindByIdService.execute(productId);
     }
