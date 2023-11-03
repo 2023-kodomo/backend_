@@ -18,7 +18,7 @@ public class AuthCodeDao {
         stringRedisTemplate.opsForValue()
                 .set(EMAIL_AUTH + email,
                         authCode,
-                        Duration.ofSeconds(1800L));
+                        Duration.ofHours(3));
     }
 
     public String getAuthCode(String email) {
