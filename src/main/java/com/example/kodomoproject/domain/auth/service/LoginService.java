@@ -21,16 +21,7 @@ public class LoginService {
     private final UserRepository userRepository;
 
     public TokenResponse execute(LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
-
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw PasswordNotMatchedException.EXCEPTION;
-        }
-
-        if (user.getRole()!= UserRole.USER) {
-            throw RoleNotMatchException.EXCEPTION;
-        }
+        validateUser(request);
 
         String accessToken = jwtProvider.createAccessToken(request.getEmail());
         String refreshToken = jwtProvider.createRefreshToken(request.getEmail());
@@ -40,4 +31,23 @@ public class LoginService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+    private void validateUser(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw PasswordNotMatchedException.EXCEPTION;
+        }
+
+        validateRole(user);
+    }
+
+    private void validateRole(User user) {
+        if (user.getRole()!= UserRole.USER) {
+            throw RoleNotMatchException.EXCEPTION;
+        }
+    }
+
+
 }

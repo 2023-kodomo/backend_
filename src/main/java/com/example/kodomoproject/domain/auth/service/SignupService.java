@@ -16,10 +16,7 @@ public class SignupService {
     private final PasswordEncoder passwordEncoder;
 
     public void execute(SignupRequest request) {
-        if (userRepository.findByName(request.getName()) .isPresent() ||
-            userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw AlreadyExistException.EXCEPTION;
-        }
+        validateRequest(request);
 
         userRepository.save(User.builder()
                 .name(request.getName())
@@ -28,4 +25,13 @@ public class SignupService {
                 .profileImage(DefaultProfile.DEFAULT_PROFILE)
                 .build());
     }
+
+    private void validateRequest(SignupRequest request) {
+        if (userRepository.findByName(request.getName()).isPresent() ||
+                userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw AlreadyExistException.EXCEPTION;
+        }
+    }
+
+
 }
