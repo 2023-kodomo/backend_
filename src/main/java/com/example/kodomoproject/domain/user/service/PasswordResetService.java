@@ -14,6 +14,7 @@ import io.jsonwebtoken.Claims;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,7 @@ public class PasswordResetService {
         return defaultURL + "/user/password-reset/v/" + token;
     }
 
+    @Async
     public void sendMail() throws MessagingException, UnsupportedEncodingException { // url 을 만들어 메일을 보낸다 !
         User user = userFacade.getUser();  // 로그인된 사용자가 비밀번호 재설정을 할 때
         String email = user.getEmail();
