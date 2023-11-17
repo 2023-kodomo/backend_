@@ -152,7 +152,6 @@ public class EmailService {
         try{
             mailSender.send(message);
         }catch(MailException e){
-            e.printStackTrace();
             throw MailSendException.EXCEPTION;
         }
     }
