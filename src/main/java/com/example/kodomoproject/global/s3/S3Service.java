@@ -9,6 +9,7 @@ import com.example.kodomoproject.global.s3.exception.ImageUploadFailedException;
 import com.example.kodomoproject.global.s3.exception.ImageNotFoundException;
 import com.example.kodomoproject.global.error.exception.InvalidDataException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Objects;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class S3Service {
@@ -36,10 +38,11 @@ public class S3Service {
             amazonS3.putObject(new PutObjectRequest(bucket, fileName, image.getInputStream(), metadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw ImageUploadFailedException.EXCEPTION;
         }
 
-        return getFileUrl(imageName);
+        return getFileUrl(fileName);
     }
 
     public String getFileUrl(String imageName) {
