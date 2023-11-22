@@ -7,9 +7,9 @@ import lombok.Builder;
 import java.util.Date;
 
 @Builder
-public record CommentResponse(User writer, String content, Date createdDate) {
+public record CommentResponse(String id, User writer, String content, Date createdDate) {
     public CommentResponse(Comment comment) {
-        this(comment.getWriter(), comment.getContent(), comment.getCreatedDate());
+        this(comment.getId(), comment.getWriter(), comment.getContent(), comment.getCreatedDate());
     }
 
 }
