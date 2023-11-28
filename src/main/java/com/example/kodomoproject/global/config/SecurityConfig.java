@@ -46,8 +46,6 @@ public class SecurityConfig {
                 .headers(headersConfigurer -> headersConfigurer
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 
-                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
-
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
@@ -57,15 +55,6 @@ public class SecurityConfig {
 
                 .addFilterBefore(new JwtAuthFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
-    }
-
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.applyPermitDefaultValues();
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
     }
 
 }
