@@ -21,18 +21,19 @@ public class LoginService {
     private final UserRepository userRepository;
 
     public TokenResponse execute(LoginRequest request) {
-        validateUser(request);
+        String userId = validateUser(request);
 
         String accessToken = jwtProvider.createAccessToken(request.getEmail());
         String refreshToken = jwtProvider.createRefreshToken(request.getEmail());
 
         return TokenResponse.builder()
+                .userId(userId)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
     }
 
-    private void validateUser(LoginRequest request) {
+    private String validateUser(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
@@ -41,6 +42,8 @@ public class LoginService {
         }
 
         validateRole(user);
+
+        return user.getId();
     }
 
     private void validateRole(User user) {
@@ -48,6 +51,5 @@ public class LoginService {
             throw RoleNotMatchException.EXCEPTION;
         }
     }
-
 
 }
