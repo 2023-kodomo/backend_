@@ -4,6 +4,7 @@ import com.example.kodomoproject.domain.comment.controller.dto.response.CommentR
 import com.example.kodomoproject.domain.comment.entity.Comment;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CommentCollection {
 
@@ -15,6 +16,7 @@ public class CommentCollection {
 
     public List<CommentResponse> toCommentResponse() {
         return comments.stream()
+                .filter(Objects::nonNull)
                 .map(CommentResponse::new)
                 .toList();
     }
