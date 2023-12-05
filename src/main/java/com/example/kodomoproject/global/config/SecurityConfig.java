@@ -34,7 +34,8 @@ public class SecurityConfig {
             "/auth/**",
             "/user/password-reset/v/**",
             "/user/password-reset/r/**",
-            "/products"
+            "/products",
+            "/email/**"
     };
 
     @Bean
