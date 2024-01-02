@@ -28,9 +28,8 @@ public class ProductController {
     public void createProduct(@RequestParam("title") String title,
                               @RequestParam("content") String content,
                               @RequestParam("price") int price,
-                              @RequestParam("place") String place,
                               @RequestPart(required = false, value = "image") MultipartFile image) {
-        ProductRequest request = new ProductRequest(title, content, price, place);
+        ProductRequest request = new ProductRequest(title, content, price);
 
         productCreateService.execute(request, image);
     }
@@ -40,9 +39,8 @@ public class ProductController {
                                  @RequestParam("title") String title,
                                  @RequestParam("content") String content,
                                  @RequestParam("price") int price,
-                                 @RequestParam("place") String place,
                                  @RequestPart(required = false, value = "image") MultipartFile image) {
-        ProductUpdateRequest request = new ProductUpdateRequest(title, content, price, place);
+        ProductUpdateRequest request = new ProductUpdateRequest(title, content, price);
 
         return productModifyService.execute(request, productId, image);
     }
