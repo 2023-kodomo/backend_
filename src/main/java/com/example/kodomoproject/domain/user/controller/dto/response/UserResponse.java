@@ -15,6 +15,8 @@ import java.util.List;
 public class UserResponse {
     private String id;
 
+    private String profileImage;
+
     private String name;
 
     private String email;

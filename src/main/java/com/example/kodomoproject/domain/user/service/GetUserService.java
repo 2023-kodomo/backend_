@@ -31,6 +31,7 @@ public class GetUserService {
 
         return  UserResponse.builder()
                 .id(user.getId())
+                .profileImage(user.getProfileImage())
                 .name(user.getName())
                 .email(user.getEmail())
                 .product(products)
@@ -43,6 +44,7 @@ public class GetUserService {
 
         return  UserResponse.builder()
                 .id(user.getId())
+                .profileImage(user.getProfileImage())
                 .name(user.getName())
                 .email(user.getEmail())
                 .product(products)
