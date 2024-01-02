@@ -38,26 +38,22 @@ public class Product {
     @DBRef(lazy = true)
     private List<Comment> comments = new ArrayList<>();
 
-    private String place = "미정";
-
     @Builder
-    public Product(User seller,String title, String content, Integer price, Date updatedDate, String image, String place) {
+    public Product(User seller,String title, String content, Integer price, Date updatedDate, String image) {
         this.seller = seller;
         this.title = title;
         this.content = content;
         this.price = price;
         this.uploadDate = updatedDate;
         this.imageURL = image;
-        this.place = place;
     }
 
-    public void update(String title, String content, Integer price, Date updatedDate, String image, String place) {
+    public void update(String title, String content, Integer price, Date updatedDate, String image) {
         this.title = title;
         this.content = content;
         this.price = price;
         this.uploadDate = updatedDate;
         this.imageURL = image;
-        this.place = place;
     }
 
 }

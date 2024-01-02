@@ -40,8 +40,7 @@ public class ProductUpdateService {
                 request.getContent(),
                 request.getPrice(),
                 now,
-                imageURL,
-                request.getPlace());
+                imageURL);
 
         return productRepository.save(product);
     }

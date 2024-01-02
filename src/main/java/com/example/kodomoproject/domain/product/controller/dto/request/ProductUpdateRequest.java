@@ -22,6 +22,4 @@ public class ProductUpdateRequest {
     @PositiveOrZero
     private Integer price;
 
-    private String place;
-
 }

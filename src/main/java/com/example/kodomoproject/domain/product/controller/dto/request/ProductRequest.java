@@ -23,5 +23,4 @@ public class ProductRequest {
     @PositiveOrZero(message = "가격은 0 또는 양수만 입력가능합니다.")
     private Integer price;
 
-    private String place;
 }

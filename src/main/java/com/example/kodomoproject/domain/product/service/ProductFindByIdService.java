@@ -1,7 +1,6 @@
 package com.example.kodomoproject.domain.product.service;
 
 import com.example.kodomoproject.domain.comment.collection.CommentCollection;
-import com.example.kodomoproject.domain.comment.controller.dto.response.CommentResponse;
 import com.example.kodomoproject.domain.product.controller.dto.response.ProductResponse;
 import com.example.kodomoproject.domain.product.entity.Product;
 import com.example.kodomoproject.domain.product.entity.ProductDetails;
@@ -32,7 +31,6 @@ public class ProductFindByIdService {
                 .id(product.getId())
                 .seller(product.getSeller())
                 .details(details)
-                .place(product.getPlace())
                 .comment(commentCollection.toCommentResponse())
                 .build();
     }

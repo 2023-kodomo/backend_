@@ -35,7 +35,6 @@ public class ProductCreateService {
                 .price(request.getPrice())
                 .image(imageURL)
                 .updatedDate(now)
-                .place(request.getPlace())
                 .build());
     }
 
