@@ -27,8 +27,7 @@ public class S3Service {
     private String bucket;
 
     public String uploadImage(MultipartFile image) {
-        String imageName = image.getOriginalFilename();
-        String fileName = UUID.randomUUID() + imageName;
+        String fileName = String.valueOf(UUID.randomUUID());
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(image.getSize());
