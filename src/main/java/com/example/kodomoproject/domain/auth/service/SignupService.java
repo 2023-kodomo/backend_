@@ -35,9 +35,9 @@ public class SignupService {
                 userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw AlreadyExistException.EXCEPTION;
         }
-        emailRepository.findById(request.getEmail()).ifPresent(e -> {
+        if (emailRepository.findById(request.getEmail()).isEmpty()) {
             throw NoPermissionException.EXCEPTION;
-        });
+        }
     }
 
     private void deleteEmailFromRedis(String email) {
