@@ -6,8 +6,10 @@ import com.example.kodomoproject.domain.user.entity.UserRole;
 import com.example.kodomoproject.domain.user.repository.UserRepository;
 import com.example.kodomoproject.domain.user.service.facade.UserFacade;
 import com.example.kodomoproject.global.email.controller.dto.EmailRequest;
+import com.example.kodomoproject.global.email.entity.UserEmail;
 import com.example.kodomoproject.global.email.exception.AlreadyAuthenticatedUserException;
 import com.example.kodomoproject.global.email.exception.MailSendException;
+import com.example.kodomoproject.global.email.repository.EmailRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -26,6 +28,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class EmailService {
     private final UserRepository userRepository;
+    private final EmailRepository emailRepository;
     private final UserFacade userFacade;
     private final JavaMailSender mailSender;
     private final AuthCodeDao authCodeDao;
@@ -119,7 +122,7 @@ public class EmailService {
         return "<div style='margin:20px;'>"
                 + "<p><b>대팔이</b> - 대마고 중고거래 서비스에서 알려드립니다</p><br>"
                 + "<div>이 이메일 주소와 연결된 계정의 비밀번호를 업데이트 했습니다.</div>"
-                + "<p style='font-size:100%;'>본인이 아닐 시 문의</p>"
+                + "<p style='font-size:100%;'>본인이 아닐 시 문의해주세요</p>"
                 + "</div>";
     }
 
@@ -132,13 +135,8 @@ public class EmailService {
     @Async
     public void sendAuthCode(EmailRequest request) throws MessagingException, UnsupportedEncodingException {
         String email = request.getEmail();
-        User user = userFacade.getUserByEmail(email);
 
-        if (user.getRole() == UserRole.USER) {
-            throw AlreadyAuthenticatedUserException.EXCEPTION;
-        }
-
-        MimeMessage message = sendEmailForAuth(user.getEmail());
+        MimeMessage message = sendEmailForAuth(email);
 
         sendSimpleMessage(message);
     }
@@ -148,6 +146,7 @@ public class EmailService {
 
         sendSimpleMessage(message);
     }
+
     private void sendSimpleMessage(MimeMessage message) {
         try{
             mailSender.send(message);
@@ -170,9 +169,10 @@ public class EmailService {
         String email = request.getEmail();
         if (isVerify(authCode, email)) {
             authCodeDao.deleteAuthCode(email);
-            User user = userFacade.getUserByEmail(email);
-            user.addRole(UserRole.USER);
-            userRepository.save(user);
+
+            emailRepository.save(UserEmail.builder()
+                    .email(email)
+                    .build());
             return createResponse(VERIFIED_MESSAGE, true);
         } else {
             return createResponse(MISMATCH_MESSAGE, false);

@@ -4,6 +4,8 @@ import com.example.kodomoproject.domain.auth.controller.dto.request.SignupReques
 import com.example.kodomoproject.domain.auth.exception.AlreadyExistException;
 import com.example.kodomoproject.domain.user.entity.User;
 import com.example.kodomoproject.domain.user.repository.UserRepository;
+import com.example.kodomoproject.global.email.repository.EmailRepository;
+import com.example.kodomoproject.global.error.exception.NoPermissionException;
 import com.example.kodomoproject.global.s3.DefaultProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class SignupService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailRepository emailRepository;
 
     public void execute(SignupRequest request) {
         validateRequest(request);
@@ -24,6 +27,7 @@ public class SignupService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .profileImage(DefaultProfile.DEFAULT_PROFILE)
                 .build());
+        deleteEmailFromRedis(request.getEmail());
     }
 
     private void validateRequest(SignupRequest request) {
@@ -31,7 +35,13 @@ public class SignupService {
                 userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw AlreadyExistException.EXCEPTION;
         }
+        emailRepository.findById(request.getEmail()).ifPresent(e -> {
+            throw NoPermissionException.EXCEPTION;
+        });
     }
 
+    private void deleteEmailFromRedis(String email) {
+        emailRepository.deleteById(email);
+    }
 
 }

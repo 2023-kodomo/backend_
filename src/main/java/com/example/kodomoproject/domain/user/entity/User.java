@@ -27,7 +27,7 @@ public class User {
 
     private String profileImage;
 
-    private UserRole role = UserRole.GUEST;
+    private UserRole role = UserRole.USER;
 
     @Builder
     public User(String name, String email, String password, String profileImage) {

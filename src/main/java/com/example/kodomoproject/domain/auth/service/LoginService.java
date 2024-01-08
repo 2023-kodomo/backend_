@@ -41,15 +41,15 @@ public class LoginService {
             throw PasswordNotMatchedException.EXCEPTION;
         }
 
-        validateRole(user);
+        //validateRole(user);
 
         return user.getId();
     }
 
-    private void validateRole(User user) {
-        if (user.getRole()!= UserRole.USER) {
-            throw RoleNotMatchException.EXCEPTION;
-        }
-    }
+//    private void validateRole(User user) {
+//        if (user.getRole()!= UserRole.USER) {
+//            throw RoleNotMatchException.EXCEPTION;
+//        }
+//    }
 
 }
