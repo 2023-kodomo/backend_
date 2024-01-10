@@ -21,7 +21,7 @@ public class ProductUpdateService {
     private final DateFacade dateFacade;
     private final S3Service s3Service;
 
-    public Product execute(ProductUpdateRequest request,
+    public void execute(ProductUpdateRequest request,
                            String id,
                            MultipartFile image) {
         Product product = productFacade.getProductById(id);
@@ -42,7 +42,7 @@ public class ProductUpdateService {
                 now,
                 imageURL);
 
-        return productRepository.save(product);
+        productRepository.save(product);
     }
 
 }

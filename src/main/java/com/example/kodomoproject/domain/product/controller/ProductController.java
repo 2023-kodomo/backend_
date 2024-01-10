@@ -35,14 +35,14 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    public Product updateProduct(@PathVariable String productId,
+    public void updateProduct(@PathVariable String productId,
                                  @RequestParam("title") String title,
                                  @RequestParam("content") String content,
                                  @RequestParam("price") int price,
                                  @RequestPart(required = false, value = "image") MultipartFile image) {
         ProductUpdateRequest request = new ProductUpdateRequest(title, content, price);
 
-        return productModifyService.execute(request, productId, image);
+        productModifyService.execute(request, productId, image);
     }
 
     @GetMapping("/{productId}")
